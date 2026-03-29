@@ -1,0 +1,6 @@
+{
+  "name": "Generador de Historias Interactivas con IA",
+  "description": "Una aplicación web para generar y continuar historias creativas en conversación con la API de Gemini. Inicia con un tema y sigue detallando la trama.",
+  "requestFramePermissions": [],
+  "prompt": ""
+}

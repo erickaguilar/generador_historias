@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Historias IA</title>
+    <link rel="icon" href="/favicon.ico">
+
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#0ea5e9">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Historias IA">
+    <link rel="apple-touch-icon" href="/img/icon-180.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/img/icon-152.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/img/icon-144.png">
+    <link rel="apple-touch-icon" sizes="128x128" href="/img/icon-128.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="/img/icon-192.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Montserrat', 'system-ui', '-apple-system', 'BlinkMacSystemFont', "Segoe UI", 'Roboto', "Helvetica Neue", 'Arial', "Noto Sans", 'sans-serif', "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"],
+            },
+            colors: {
+              sky: {
+                50: '#f0f9ff',
+                100: '#e0f2fe',
+                200: '#bae6fd',
+                300: '#7dd3fc',
+                400: '#38bdf8',
+                500: '#0ea5e9',
+                600: '#0284c7',
+                700: '#0369a1',
+                800: '#075985',
+                900: '#0c4a6e',
+                950: '#082f49',
+              },
+              slate: {
+                50: '#f8fafc',
+                100: '#f1f5f9',
+                200: '#e2e8f0',
+                300: '#cbd5e1',
+                400: '#94a3b8',
+                500: '#64748b',
+                600: '#475569',
+                700: '#334155',
+                800: '#1e293b',
+                900: '#0f172a',
+                950: '#020617'
+              }
+            }
+          }
+        }
+      }
+    </script>
+<script type="importmap">
+{
+  "imports": {
+    "react-dom": "https://esm.sh/react-dom@^19.1.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.1.0/",
+    "react/": "https://esm.sh/react@^19.1.0/",
+    "react": "https://esm.sh/react@^19.1.0",
+    "@google/genai": "https://esm.sh/@google/genai@^1.5.1",
+    "jspdf": "https://esm.sh/jspdf@2.5.1",
+    "dexie": "https://esm.sh/dexie@^4.0.8"
+  }
+}
+</script>
+<style>
+  /* Apply text-indent to paragraphs within the story display area */
+  .story-text-content p {
+    text-indent: 1.5em; /* Standard first-line indent */
+  }
+
+  /* Remove indent from the very first paragraph of the story block (for drop cap alignment) */
+  .story-text-content > p:first-of-type {
+    text-indent: 0;
+  }
+  
+  /* Drop Cap Styling */
+  .story-text-content > p:first-of-type::first-letter {
+    font-family: 'Montserrat', sans-serif; /* Ensure sans-serif font for the drop cap */
+    font-size: 4em;   /* Adjust size as needed, relative to current font size */
+    font-weight: bold;
+    float: left;
+    line-height: 0.75em; /* Critical for vertical alignment with text lines */
+    padding-top: 0.1em; /* Fine-tune vertical position */
+    margin-right: 0.07em; /* Space between drop cap and following text */
+    margin-bottom: -0.05em; /* Prevents interference with line below if too tall */
+    color: #7dd3fc; /* Tailwind sky-300 */
+  }
+
+  /* Ensure html tag has lang attribute for hyphenation rules (it does: lang="es") */
+  /* Tailwind's hyphens-auto class should handle cross-browser compatibility. */
+
+  /* For streaming cursor */
+  .streaming-cursor {
+    display: inline-block;
+    width: 0.6em;
+    height: 1.1em;
+    background-color: #7dd3fc; /* Tailwind sky-300 */
+    animation: blink 1s step-end infinite;
+    vertical-align: text-bottom;
+    margin-left: 0.1em;
+  }
+  @keyframes blink {
+    from, to { background-color: transparent }
+    50% { background-color: #7dd3fc; }
+  }
+  
+  /* For floating audio player */
+  @keyframes slide-up {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+  }
+  .animate-slide-up {
+      animation: slide-up 0.3s ease-out;
+  }
+
+  @keyframes pulse-icon {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+  }
+  .animate-pulse-icon {
+    animation: pulse-icon 2s ease-in-out infinite;
+  }
+
+</style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 font-sans transition-colors duration-300">
+    <div id="root" class="flex-grow flex flex-col"></div>
+    <script type="module" src="/index.tsx"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+              console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            })
+            .catch(err => {
+              console.log('ServiceWorker registration failed: ', err);
+            });
+        });
+      }
+    </script>
+</body>
+</html>

@@ -2,67 +2,15 @@
 
 
 
-const CACHE_NAME = 'interactive-story-cache-v1.4.1'; // Cache version bump
-// These are the core files for the app shell.
-// By pre-caching these, the app loads almost instantly on subsequent visits
-// and works offline.
+const CACHE_NAME = 'interactive-story-cache-v1.5.0';
+// Archivos estáticos de la app shell para precachear
 const URLS_TO_CACHE = [
   '/',
   '/index.html',
   '/manifest.json',
-  '/icon-192.png',
-  '/icon-512.png',
-
-  // Root TS/TSX
-  '/index.tsx',
-  '/App.tsx',
-
-  // Services and Utils
-  '/services/geminiService.ts',
-  '/utils/pdfUtils.ts',
-  '/utils/textUtils.ts',
-
-  // src root
-  '/src/constants.ts',
-  '/src/types.ts',
-  '/src/systemInstructions.ts',
-  '/src/db.ts',
-
-  // Components
-  '/src/components/Alert.tsx',
-  '/src/components/BranchingChoicesDisplay.tsx',
-  '/src/components/ConfirmationModal.tsx',
-  '/src/components/ConversationView.tsx',
-  '/src/components/EditStoryModal.tsx',
-  '/src/components/FollowUpForm.tsx',
-  '/src/components/FullStoryDisplay.tsx',
-  '/src/components/ImageActionsModal.tsx',
-  '/src/components/InitialPromptForm.tsx',
-  '/src/components/IosInstallPrompt.tsx',
-  '/src/components/MobileTipBanner.tsx',
-  '/src/components/Modal.tsx',
-  '/src/components/ParagraphImageModal.tsx',
-  '/src/components/StoryAudioPlayer.tsx',
-  '/src/components/StoryGenerator.tsx',
-  '/src/components/StoryHistoryModal.tsx',
-  '/src/components/StoryHistoryView.tsx',
-  '/src/components/StoryVisualizationModal.tsx',
-  '/src/components/StoryGalleryModal.tsx',
-  
-  // THE NEW CONSOLIDATED ICONS FILE
-  '/src/components/Icons.tsx',
-
-  // Pages
-  '/src/pages/HistoryPage.tsx',
-  '/src/pages/LoreBookPage.tsx',
-  '/src/pages/SettingsPage.tsx',
-
-  // Hooks
-  '/src/hooks/useInitialStorySetup.ts',
-  '/src/hooks/useLoreBook.ts',
-  '/src/hooks/useStoryArtifacts.ts',
-  '/src/hooks/useStoryAudio.ts',
-  '/src/hooks/useStoryChat.ts'
+  '/favicon.ico',
+  '/img/icon-192.png',
+  '/img/icon-512.png'
 ];
 
 self.addEventListener('install', (event) => {

@@ -32,6 +32,8 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({
   const [tempAvoidKeywordsPrompt, setTempAvoidKeywordsPrompt] = useState<string>('');
   const [tempCharacterProfilePrompt, setTempCharacterProfilePrompt] = useState<string>('');
   const [tempIncludeCharacterInStory, setTempIncludeCharacterInStory] = useState<boolean>(false);
+  const [tempApiKey, setTempApiKey] = useState<string>('');
+  const [showApiKey, setShowApiKey] = useState<boolean>(false);
 
   useEffect(() => {
     if (isInitialSettingsLoaded) {
@@ -46,6 +48,7 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({
       setTempStoryLength(currentSettings.storyLength);
       setTempIncludeKeywordsPrompt(currentSettings.includeKeywordsPrompt);
       setTempAvoidKeywordsPrompt(currentSettings.avoidKeywordsPrompt);
+      setTempApiKey(currentSettings.apiKey || '');
 
       let matchedKey = 'custom';
       if (!currentSettings.narrativeStylePrompt) { 
@@ -93,6 +96,7 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({
       avoidKeywordsPrompt: tempAvoidKeywordsPrompt,
       characterProfilePrompt: tempCharacterProfilePrompt,
       includeCharacterInStory: tempIncludeCharacterInStory,
+      apiKey: tempApiKey.trim(),
     };
   };
 
@@ -125,6 +129,56 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({
       </p>
       
       <div className="space-y-4 max-w-2xl mx-auto w-full">
+        {/* Gemini API Key Section (BYOK) */}
+        <div className="p-4 rounded-lg bg-sky-50 dark:bg-slate-700/60 border border-sky-200 dark:border-slate-600">
+          <div className="flex items-center justify-between mb-1">
+            <label htmlFor="userApiKeyInput" className="block text-sm font-semibold text-sky-800 dark:text-sky-200">
+              Clave de API de Gemini (Opcional / Propia)
+            </label>
+            <a
+              href="https://aistudio.google.com/app/apikey"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs text-sky-600 dark:text-sky-400 hover:underline"
+            >
+              Obtener clave gratuita &rarr;
+            </a>
+          </div>
+          <p className="text-xs text-slate-600 dark:text-slate-300 mb-2">
+            Tu clave se guarda exclusivamente en el almacenamiento local de tu navegador. Si la dejas vacía, se usará la clave predeterminada del servidor si está disponible.
+          </p>
+          <div className="relative flex items-center">
+            <input
+              id="userApiKeyInput"
+              type={showApiKey ? 'text' : 'password'}
+              value={tempApiKey}
+              onChange={(e) => setTempApiKey(e.target.value)}
+              placeholder="AIzaSy..."
+              disabled={isSaving}
+              className="w-full p-2.5 pr-20 bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 border border-slate-300 dark:border-slate-600 rounded-md focus:ring-sky-500 focus:border-sky-500 text-sm font-mono"
+            />
+            <div className="absolute right-2 flex items-center gap-1">
+              {tempApiKey && (
+                <button
+                  type="button"
+                  onClick={() => setTempApiKey('')}
+                  className="px-2 py-1 text-xs text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"
+                  title="Borrar clave"
+                >
+                  ✕
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={() => setShowApiKey(!showApiKey)}
+                className="px-2 py-1 text-xs font-medium text-sky-600 dark:text-sky-400 hover:text-sky-700 dark:hover:text-sky-300 rounded"
+              >
+                {showApiKey ? 'Ocultar' : 'Ver'}
+              </button>
+            </div>
+          </div>
+        </div>
+
         <div>
           <label htmlFor="narrativeStyleSelect" className="block text-sm font-medium text-sky-700 dark:text-sky-200 mb-1">
             Estilo Narrativo

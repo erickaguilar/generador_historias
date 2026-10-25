@@ -17,6 +17,7 @@ import { AlertType, type NarrativeSettingsData } from './src/types';
 import type { StoryRecord } from './src/db';
 import { StoryPOV } from './src/constants';
 import { LightbulbIcon, SunIcon, MoonIcon, HistoryIcon, LoreBookIcon, SettingsIcon, InstallIcon } from './src/components/Icons';
+import { setCustomApiKey } from './services/geminiService';
 
 
 // Interfaz para el evento de instalación, ya que no es estándar en todas las bibliotecas de TS
@@ -30,7 +31,7 @@ interface BeforeInstallPromptEvent extends Event {
 }
 
 const App = () => {
-  const appVersion = "1.7.2"; // Define la versión de la app
+  const appVersion = "1.7.3"; // Define la versión de la app
   const [installPrompt, setInstallPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [theme, setTheme] = useState<('light' | 'dark')>('dark');
   const [isIos, setIsIos] = useState(false);
@@ -94,6 +95,7 @@ const App = () => {
         storyLength: existingSettings?.storyLength ?? settingsHook.storyLength,
         includeKeywordsPrompt: existingSettings?.includeKeywordsPrompt ?? settingsHook.includeKeywordsPrompt,
         avoidKeywordsPrompt: existingSettings?.avoidKeywordsPrompt ?? settingsHook.avoidKeywordsPrompt,
+        apiKey: existingSettings?.apiKey ?? settingsHook.apiKey,
         theme: newTheme,
       };
       await saveNarrativeSettingsEntry(settingsPayload);
@@ -149,6 +151,12 @@ const App = () => {
     setCurrentView(view);
   };
 
+  useEffect(() => {
+    if (settingsHook.isInitialSettingsLoaded) {
+      setCustomApiKey(settingsHook.apiKey || null);
+    }
+  }, [settingsHook.isInitialSettingsLoaded, settingsHook.apiKey]);
+
   const handleApplySettings = (newSettings: NarrativeSettingsData) => {
       settingsHook.setNarrativeStylePrompt(newSettings.narrativeStylePrompt);
       settingsHook.setStoryPov(newSettings.storyPov);
@@ -161,6 +169,8 @@ const App = () => {
       settingsHook.setAvoidKeywordsPrompt(newSettings.avoidKeywordsPrompt);
       settingsHook.setCharacterProfilePrompt(newSettings.characterProfilePrompt);
       settingsHook.setIncludeCharacterInStory(newSettings.includeCharacterInStory);
+      settingsHook.setApiKey(newSettings.apiKey || '');
+      setCustomApiKey(newSettings.apiKey || null);
   };
   
   const handleApplyAndNotify = (newSettings: NarrativeSettingsData) => {
@@ -194,6 +204,7 @@ const App = () => {
     avoidKeywordsPrompt: settingsHook.avoidKeywordsPrompt,
     characterProfilePrompt: settingsHook.characterProfilePrompt,
     includeCharacterInStory: settingsHook.includeCharacterInStory,
+    apiKey: settingsHook.apiKey,
   };
 
 

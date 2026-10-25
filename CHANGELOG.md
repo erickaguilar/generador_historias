@@ -7,6 +7,17 @@ y este proyecto se adhiere a [Semantic Versioning](https://semver.org/lang/es/).
 
 ---
 
+## [1.7.3] - 2026-10-25
+
+### Añadido
+- **Soporte "Bring Your Own Key" (BYOK)**: Nueva sección en Ajustes para que los usuarios puedan ingresar su propia clave de API de Gemini de forma segura, almacenada localmente en IndexedDB sin exponer cuotas en despliegues públicos.
+- Conexión dinámica en `geminiService.ts` para alternar entre la clave del usuario o la clave por defecto de entorno.
+
+### Eliminado
+- Bloque `<script type="importmap">` obsoleto en `index.html`, unificando la resolución de dependencias exclusivamente a través de Vite.
+
+---
+
 ## [1.7.2] - 2026-10-25
 
 ### Añadido

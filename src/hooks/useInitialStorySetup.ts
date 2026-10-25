@@ -18,6 +18,7 @@ export const useInitialStorySetup = () => {
   const [storyLength, setStoryLength] = useState<StoryLengthKey>('default');
   const [includeKeywordsPrompt, setIncludeKeywordsPrompt] = useState<string>('');
   const [avoidKeywordsPrompt, setAvoidKeywordsPrompt] = useState<string>('');
+  const [apiKey, setApiKey] = useState<string>('');
   const [dynamicPlaceholder, setDynamicPlaceholder] = useState<string>(LOADING_DYNAMIC_PLACEHOLDER_MESSAGE);
   const [isLoadingDynamicPlaceholder, setIsLoadingDynamicPlaceholder] = useState<boolean>(true);
   const [isInitialSettingsLoaded, setIsInitialSettingsLoaded] = useState<boolean>(false);
@@ -38,6 +39,9 @@ export const useInitialStorySetup = () => {
         setStoryLength(loadedSettings.storyLength);
         setIncludeKeywordsPrompt(loadedSettings.includeKeywordsPrompt);
         setAvoidKeywordsPrompt(loadedSettings.avoidKeywordsPrompt);
+        if (loadedSettings.apiKey) {
+          setApiKey(loadedSettings.apiKey);
+        }
         // Theme is handled by App.tsx, so we don't set it here.
       }
       setIsInitialSettingsLoaded(true); // Mark as loaded even if null
@@ -92,6 +96,8 @@ export const useInitialStorySetup = () => {
     setIncludeKeywordsPrompt,
     avoidKeywordsPrompt,
     setAvoidKeywordsPrompt,
+    apiKey,
+    setApiKey,
     dynamicPlaceholder,
     isLoadingDynamicPlaceholder,
     saveNarrativeSettings, // Expose the save function

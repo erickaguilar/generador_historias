@@ -34,6 +34,7 @@ export interface NarrativeSettingsData {
   storyLength: import('./constants').StoryLengthKey;
   includeKeywordsPrompt: string;
   avoidKeywordsPrompt: string;
+  apiKey?: string;
   theme?: 'light' | 'dark';
 }
 

@@ -1,31 +1,45 @@
 import { GoogleGenAI, Chat, GenerateContentResponse, Type } from "@google/genai";
 import { GEMINI_MODEL_NAME } from '../src/constants';
 
-const API_KEY = process.env.API_KEY;
-
+const DEFAULT_ENV_API_KEY = process.env.API_KEY || process.env.GEMINI_API_KEY || '';
+let customApiKey: string | null = null;
 let ai: GoogleGenAI | null = null;
+let currentKeyInUse: string | null = null;
 
-if (API_KEY) {
-  try {
-    ai = new GoogleGenAI({ apiKey: API_KEY });
-  } catch (error) {
-    console.error("Failed to initialize GoogleGenAI:", error);
-    // This error will be caught by the calling function if ai remains null
+export const setCustomApiKey = (key: string | null) => {
+  const sanitized = key && key.trim() !== '' ? key.trim() : null;
+  if (sanitized !== customApiKey) {
+    customApiKey = sanitized;
+    ai = null; // Reinitialize on next request
+    currentKeyInUse = null;
   }
-} else {
-  console.error("API_KEY environment variable is not set. Gemini API functionality will be disabled.");
-}
+};
+
+export const getActiveApiKey = (): string => {
+  if (customApiKey) return customApiKey;
+  return DEFAULT_ENV_API_KEY;
+};
 
 const getInitializedAI = (): GoogleGenAI => {
-    if (!ai) {
-        throw new Error(
-          "La API Key de Gemini no está configurada o la inicialización falló. " +
-          "Por favor, asegúrese de que la variable de entorno API_KEY (o equivalente para su entorno de compilación, ej: REACT_APP_API_KEY o VITE_API_KEY) " +
-          "esté correctamente establecida y sea válida."
-        );
+  const activeKey = getActiveApiKey();
+  if (!activeKey) {
+    throw new Error(
+      "La API Key de Gemini no está configurada. " +
+      "Por favor ingresa tu API Key en la pestaña de 'Ajustes' o configúrala en las variables de entorno."
+    );
+  }
+
+  if (!ai || currentKeyInUse !== activeKey) {
+    try {
+      ai = new GoogleGenAI({ apiKey: activeKey });
+      currentKeyInUse = activeKey;
+    } catch (error) {
+      console.error("Failed to initialize GoogleGenAI with key:", error);
+      throw new Error("No se pudo inicializar la API de Gemini con la clave proporcionada.");
     }
-    return ai;
-}
+  }
+  return ai;
+};
 
 const handleGeminiApiError = (error: unknown, context: string): Error => {
   console.error(`Error calling Gemini API (${context}):`, error);

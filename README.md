@@ -1,109 +1,157 @@
 # Generador de Historias Interactivas con IA
 
-Una aplicación web progresiva (PWA) que utiliza la **API de Google Gemini** para crear, continuar y dar forma a historias únicas y creativas de forma conversacional. Inicia con una idea y colabora con la IA para desarrollar la trama, los personajes y el mundo.
+Una aplicación web progresiva (PWA) moderna que utiliza la **API de Google Gemini** y modelos de generación de imágenes para crear, continuar y enriquecer historias literarias interactivas de forma colaborativa y conversacional.
+
+[![Licencia: MIT](https://img.shields.io/badge/Licencia-MIT-blue.svg)](./LICENSE)
+[![React](https://img.shields.io/badge/React-19-61dafb.svg)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178c6.svg)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-6-646cff.svg)](https://vitejs.dev/)
+[![Vercel](https://img.shields.io/badge/Deploy-Vercel-black.svg)](https://vercel.com/)
 
 ---
 
 ## ✨ Características Principales
 
--   **Generación Inteligente de Relatos**: Inicia una historia desde cero con una simple idea. La IA, impulsada por `gemini-2.5-flash`, crea un comienzo evocador y coherente.
--   **Narrativa Conversacional y Dinámica**: Guía el curso de la historia con tus propias palabras, o elige entre opciones de continuación, giros inesperados ("Algo Inesperado") o escenas detalladas ("Profundizar Escena") que la IA propone.
--   **Control Creativo Total (Ajustes Avanzados)**: Moldea la voz de la IA con un control granular sin precedentes:
-    -   **Estilo Narrativo**: Elige entre estilos predefinidos (Fantasía, Noir, etc.) o describe tu propio estilo personalizado.
-    -   **Punto de Vista (POV)**: Narra en primera, tercera persona limitada u omnisciente.
-    -   **Tono Emocional**: Infunde a la historia un ambiente específico (suspenso, melancolía, alegría).
-    -   **Parámetros de Trama**: Define un tema central, un "MacGuffin", palabras clave a incluir/evitar, y más.
--   **Libro de Lore (World-Building Persistente)**: ¡La clave para la coherencia! Define tus personajes, lugares y conceptos únicos en un "lore book". La IA consultará esta "biblia" en cada generación para mantener la consistencia a lo largo de historias extensas.
--   **Universo Visual**:
-    -   **Ilustración Principal**: Genera una imagen única para tu historia usando `imagen-3.0-generate-002`, que captura la esencia del último capítulo.
-    -   **Generación por Párrafo**: ¿Te encanta una escena? Genera una imagen específica para cualquier párrafo con un solo clic.
-    -   **Galería de la Historia**: Guarda tus imágenes favoritas en una galería dedicada para cada historia.
-    -   **Modificación de Imágenes**: ¿No te convence la imagen? Dale instrucciones a la IA para que la modifique.
--   **Escucha tus Creaciones**: Utiliza la síntesis de voz del navegador para reproducir la historia completa o solo los fragmentos más recientes.
--   **Gestión de Historias Offline**:
-    -   **Almacenamiento Local**: Guarda tus historias (texto, imagen principal y galería completa) en tu navegador usando IndexedDB.
-    -   **Carga y Edita**: Carga historias guardadas para continuarlas, o edita su título y contenido en cualquier momento.
--   **Exportación Profesional**: Descarga tu historia completa, con título e imagen principal, en un archivo PDF con formato cuidado.
--   **Experiencia PWA Moderna**: Instala la aplicación en tu escritorio o móvil para un acceso rápido, con soporte completo para funcionar sin conexión a internet.
+- **Generación Inteligente de Relatos**: Inicia una historia desde una simple premisa. La IA, potenciada por `gemini-2.5-flash`, crea un comienzo evocador y coherente.
+- **Narrativa Conversacional y Dinámica**: Guía el curso de la historia con tus propias palabras o elige entre opciones de ramificación generadas dinámicamente, giros inesperados (*"Algo Inesperado"*) o descripciones profundas (*"Profundizar Escena"*).
+- **Control Creativo Total (Ajustes Avanzados)**:
+  - **Estilo Narrativo**: Selección entre estilos predefinidos (Fantasía, Noir, Ciencia Ficción, etc.) o descripción personalizada.
+  - **Punto de Vista (POV)**: Primera persona, tercera persona limitada u omnisciente.
+  - **Tono Emocional**: Suspenso, melancolía, optimismo, terror, etc.
+  - **Parámetros de Trama**: Tema central, "MacGuffin", palabras clave obligatorias o a evitar.
+- **Libro de Lore (World-Building Persistente)**: Define personajes y elementos del mundo en una "biblia" integrada. La IA consulta este registro en cada generación para asegurar continuidad y coherencia a largo plazo.
+- **Universo Visual con Imagen 3**:
+  - **Ilustración Principal**: Genera imágenes conceptuales del clímax o último fragmento usando `imagen-3.0-generate-002`.
+  - **Ilustración por Párrafo**: Genera imágenes específicas para escenas concretas.
+  - **Galería Integrada**: Guarda y administra todas las ilustraciones asociadas a cada historia.
+  - **Refinamiento de Imágenes**: Solicita modificaciones visuales a la IA mediante lenguaje natural.
+- **Reproducción por Voz**: Escucha el relato completo o los párrafos recientes utilizando la síntesis de voz nativa del navegador.
+- **Gestión Local y Modo Offline**:
+  - Almacenamiento local seguro en el navegador mediante **IndexedDB** ([Dexie.js](https://dexie.org/)).
+  - Sin necesidad de backend externo para persistir historias, imágenes o configuraciones.
+- **Exportación Profesional a PDF**: Descarga tu libro digital maquetado, incluyendo portada e ilustraciones, mediante [jsPDF](https://github.com/parallax/jsPDF).
+- **PWA (Progressive Web App)**: Instálala como app nativa en Android, iOS, Windows o macOS con soporte sin conexión.
 
 ---
 
 ## 🛠️ Tecnologías Utilizadas
 
--   **Frontend**: [React](https://reactjs.org/), [TypeScript](https://www.typescriptlang.org/), [Tailwind CSS](https://tailwindcss.com/)
--   **Inteligencia Artificial**: [Google Gemini API](https://ai.google.dev/) (`@google/genai`) usando los modelos `gemini-2.5-flash` y `imagen-3.0-generate-002`.
--   **Base de Datos Local**: [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API) a través de [Dexie.js](https://dexie.org/)
--   **Generación de PDF**: [jsPDF](https://github.com/parallax/jsPDF)
--   **Soporte Offline**: Service Workers (PWA)
+- **Frontend**: [React 19](https://react.dev/), [TypeScript](https://www.typescriptlang.org/), [Tailwind CSS](https://tailwindcss.com/)
+- **Herramienta de Compilación**: [Vite 6](https://vitejs.dev/)
+- **Modelos de IA**: [Google GenAI SDK](https://github.com/google-gemini/deprecations) (`@google/genai`) con `gemini-2.5-flash` e `imagen-3.0-generate-002`
+- **Base de Datos Local**: [Dexie.js](https://dexie.org/) sobre [IndexedDB](https://developer.mozilla.org/es/docs/Web/API/IndexedDB_API)
+- **Generación de PDF**: [jsPDF](https://github.com/parallax/jsPDF)
+- **Plataforma de Despliegue**: Optimizado para [Vercel](https://vercel.com/)
 
 ---
 
-## 🚀 Cómo Empezar
-
-Sigue estos pasos para configurar y ejecutar el proyecto en tu máquina local.
+## 🚀 Instalación y Ejecución Local
 
 ### Prerrequisitos
 
--   [Node.js](https://nodejs.org/) (versión 18.x o superior)
--   [npm](https://www.npmjs.com/) o [yarn](https://yarnpkg.com/)
--   Una clave de API de **Google Gemini**. Puedes obtenerla en [Google AI Studio](https://ai.google.dev/pricing).
+- [Node.js](https://nodejs.org/) (versión 18 o superior)
+- [npm](https://www.npmjs.com/) (o gestor equivalente: `pnpm`, `yarn`)
+- Clave de API de **Google Gemini** (gratuita en [Google AI Studio](https://aistudio.google.com/app/apikey))
 
-### Instalación
+### Pasos
 
-1.  **Clona el repositorio:**
-    ```bash
-    git clone https://github.com/tu-usuario/generador-historias-ia.git
-    cd generador-historias-ia
-    ```
+1. **Clonar el repositorio:**
+   ```bash
+   git clone https://github.com/erickaguilar/generador_historias.git
+   cd generador_historias
+   ```
 
-2.  **Instala las dependencias:**
-    ```bash
-    npm install
-    # o
-    yarn install
-    ```
+2. **Instalar dependencias:**
+   ```bash
+   npm install
+   ```
 
-3.  **Configura tu clave de API:**
-    Este proyecto requiere una clave de API de Google Gemini para funcionar. La aplicación está configurada para leer la clave desde una variable de entorno `API_KEY`. Deberás configurar esta variable en tu entorno de desarrollo. La forma de hacerlo depende de tu sistema y de la herramienta que uses para ejecutar el proyecto (por ejemplo, creando un archivo `.env` si usas un bundler como Vite o Create React App). El código fuente (`services/geminiService.ts`) te guiará con un mensaje de error si la clave no se encuentra.
+3. **Configurar las variables de entorno:**
+   Crea un archivo `.env` en la raíz del proyecto:
+   ```env
+   GEMINI_API_KEY=tu_clave_de_api_aqui
+   ```
 
-4.  **Ejecuta el servidor de desarrollo:**
-    La forma de ejecutar el proyecto dependerá de tu configuración local (ej. `npm run dev`).
+4. **Iniciar el servidor de desarrollo:**
+   ```bash
+   npm run dev
+   ```
+   Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
+
+5. **Otros scripts disponibles:**
+   ```bash
+   npm run build    # Compila la aplicación para producción en /dist
+   npm run preview  # Previsualiza localmente el build de producción
+   ```
+
+---
+
+## ☁️ Despliegue en Vercel
+
+El proyecto incluye configuración lista para desplegar en **Vercel** (`vercel.json` y `vite.config.ts` optimizados):
+
+1. Sube tu código a GitHub.
+2. Ingresa a [vercel.com](https://vercel.com) e inicia sesión.
+3. Haz clic en **"Add New..."** > **"Project"** y selecciona tu repositorio `generador_historias`.
+4. En la sección **Environment Variables**, añade:
+   - **Key:** `GEMINI_API_KEY`
+   - **Value:** `Tu clave de API de Gemini`
+5. Haz clic en **"Deploy"**. En cuestión de segundos tu aplicación estará en producción.
 
 ---
 
 ## 📂 Estructura del Proyecto
 
-El código fuente está organizado de la siguiente manera para mantener la modularidad y la escalabilidad:
+```text
+├── public/                 # Archivos estáticos de la PWA y app shell
+│   ├── favicon.ico
+│   ├── font/               # Tipografías locales
+│   ├── img/                # Iconos y logotipos de la PWA
+│   ├── manifest.json       # Manifiesto Web App
+│   └── sw.js               # Service Worker para caché y soporte offline
+├── readme/                 # Documentación técnica extendida y roadmaps
+│   ├── IMPLEMENTATION_ROADMAP.md
+│   ├── IMPROVEMENTS_CONTEXT_AI.md
+│   └── MOBILE_UI_IMPROVEMENTS.md
+├── services/               # Clientes e integraciones con APIs externas (Gemini)
+│   └── geminiService.ts
+├── src/
+│   ├── components/         # Componentes modulares de interfaz (UI)
+│   ├── hooks/              # Custom React Hooks (lógica de chat, audio, lore, etc.)
+│   ├── pages/              # Vistas de la aplicación (Generador, Lore, Historial, Ajustes)
+│   ├── constants.ts        # Opciones, configuraciones y constantes de prompts
+│   ├── db.ts               # Esquema de IndexedDB mediante Dexie
+│   ├── systemInstructions.ts # Motor de compilación de prompts de sistema dinámicos
+│   └── types.ts            # Tipado de TypeScript
+├── utils/                  # Utilidades auxiliares (exportación a PDF, formateo)
+├── App.tsx                 # Componente raíz y enrutador de vistas
+├── CHANGELOG.md            # Registro histórico de versiones
+├── LICENSE                 # Licencia de código abierto MIT
+├── package.json            # Metadatos del proyecto y dependencias
+├── vercel.json             # Configuración de reescrituras para Vercel
+└── vite.config.ts          # Configuración de compilación de Vite
+```
 
-```
-/src
-|-- /components     # Componentes de React reutilizables (UI)
-|-- /constants.ts   # Constantes de la aplicación (prompts, opciones, etc.)
-|-- /db.ts          # Configuración y helpers de Dexie.js para IndexedDB
-|-- /hooks          # Hooks de React personalizados para encapsular lógica
-|-- /services       # Comunicación con APIs externas (Gemini API)
-|-- /systemInstructions.ts # Lógica para construir el prompt del sistema para la IA
-|-- /types.ts       # Definiciones de tipos y interfaces de TypeScript
-|-- App.tsx         # Componente principal de la aplicación
-|-- index.tsx       # Punto de entrada de React
-/public             # Archivos estáticos (íconos, manifest.json)
-/utils              # Funciones de utilidad (ej: generación de PDF)
-```
+---
+
+## 📄 Registro de Cambios
+
+Consulta el archivo [CHANGELOG.md](./CHANGELOG.md) para conocer las novedades y notas de cada versión.
 
 ---
 
 ## 🤝 Contribuciones
 
-Las contribuciones son bienvenidas. Si tienes una idea para una nueva característica o has encontrado un error, por favor sigue estos pasos:
+Las contribuciones son bienvenidas:
 
-1.  Haz un "Fork" del repositorio.
-2.  Crea una nueva rama (`git checkout -b feature/nueva-caracteristica`).
-3.  Realiza tus cambios y haz "commit" (`git commit -am 'Añade nueva característica'`).
-4.  Haz "push" a la rama (`git push origin feature/nueva-caracteristica`).
-5.  Crea un nuevo "Pull Request".
+1. Realiza un *Fork* del repositorio.
+2. Crea tu rama para la funcionalidad: `git checkout -b feature/nueva-funcionalidad`.
+3. Haz *commit* de tus cambios: `git commit -m 'feat: añadir nueva funcionalidad'`.
+4. Sube la rama: `git push origin feature/nueva-funcionalidad`.
+5. Abre un *Pull Request*.
 
 ---
 
 ## 📜 Licencia
 
-Este proyecto está bajo la Licencia MIT. Consulta el archivo `LICENSE` para más detalles.
+Este proyecto se encuentra bajo la Licencia **MIT**. Consulta el archivo [LICENSE](./LICENSE) para más detalles.
